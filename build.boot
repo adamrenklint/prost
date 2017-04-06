@@ -23,7 +23,7 @@
   (comp (watch)
         (test)))
 
-(deftask release
+(deftask release []
   (comp (build-jar)
         (push-release)))
 
