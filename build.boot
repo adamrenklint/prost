@@ -29,8 +29,7 @@
         (jar)
         (push :repo "clojars"
               :tag true
-              :ensure-release true
-              :gpg-sign true)))
+              :ensure-release true)))
 
 (task-options!
   pom {:project     project
