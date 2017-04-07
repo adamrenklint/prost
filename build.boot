@@ -26,7 +26,8 @@
 
 (deftask release []
   (comp (build-jar)
-        (push-release)))
+        (push-release)
+        (dosh "git" "push" "--tags")))
 
 (task-options!
   pom {:project     project
