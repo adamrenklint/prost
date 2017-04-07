@@ -4,8 +4,6 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 
 [![CircleCI](https://circleci.com/gh/adamrenklint/prost.svg?style=svg)](https://circleci.com/gh/adamrenklint/prost)
 
-## Installation
-
 ```clojure
 [adamrenklint/prost "0.1.0"] ;; latest release
 ```
