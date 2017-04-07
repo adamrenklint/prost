@@ -2,7 +2,13 @@
 
 Pre and post condition assertion helpers for ClojureScript with useful errors
 
-[![Clojars](https://img.shields.io/clojars/v/adamrenklint/prost-io.svg?style=flat-square)](https://clojars.org/adamrenklint/prost) `[adamrenklint/prost "0.1.0"]`
+[![CircleCI](https://circleci.com/gh/adamrenklint/prost.svg?style=svg)](https://circleci.com/gh/adamrenklint/prost)
+
+## Installation
+
+```clojure
+[adamrenklint/prost "0.1.0"] ;; latest release
+```
 
 ## Usage
 
