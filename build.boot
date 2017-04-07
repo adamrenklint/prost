@@ -25,11 +25,8 @@
         (test)))
 
 (deftask release []
-  (comp (pom)
-        (jar)
-        (push :repo "clojars"
-              :tag true
-              :ensure-release true)))
+  (comp (build-jar)
+        (push-release)))
 
 (task-options!
   pom {:project     project
