@@ -16,3 +16,6 @@ dependencies:
     - "~/.m2"
     - "~/.boot/cache/bin"
     - "~/.boot/cache/lib"
+test:
+  override:
+    - echo 1
