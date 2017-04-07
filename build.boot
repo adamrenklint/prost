@@ -8,6 +8,7 @@
                  [crisptrutski/boot-cljs-test "0.3.0"  :scope "test"]])
 
 (require '[adzerk.bootlaces :refer :all]
+         '[boot.git :as git]
          '[crisptrutski.boot-cljs-test :refer [test-cljs]])
 
 (bootlaces! version)
@@ -24,8 +25,12 @@
         (test)))
 
 (deftask release []
-  (comp (build-jar)
-        (push-release)))
+  (comp (pom)
+        (jar)
+        (push :repo "clojars"
+              :tag true
+              :ensure-release true
+              :gpg-sign true)))
 
 (task-options!
   pom {:project     project
