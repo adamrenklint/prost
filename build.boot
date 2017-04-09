@@ -1,13 +1,15 @@
 (def project 'adamrenklint/prost)
-(def version "0.1.0")
+(def version "1.0.0")
 
 (set-env!
  :source-paths #{"src"}
  :dependencies '[[org.clojure/clojurescript   "1.9.494"]
                  [adzerk/bootlaces            "0.1.13" :scope "test"]
-                 [crisptrutski/boot-cljs-test "0.3.0"  :scope "test"]])
+                 [crisptrutski/boot-cljs-test "0.3.0"  :scope "test"]
+                 [adamrenklint/boot-fmt       "1.1.0"  :scope "test"]])
 
 (require '[adzerk.bootlaces :refer :all]
+         '[adamrenklint.boot-fmt :refer [fmt]]
          '[boot.git :as git]
          '[crisptrutski.boot-cljs-test :refer [test-cljs]])
 

@@ -5,7 +5,7 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 [![CircleCI](https://circleci.com/gh/adamrenklint/prost.svg?style=svg)](https://circleci.com/gh/adamrenklint/prost)
 
 ```clojure
-[adamrenklint/prost "0.1.0"] ;; latest release
+[adamrenklint/prost "1.0.0"] ;; latest release
 ```
 
 ## Usage
@@ -51,9 +51,11 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 
 - `boot test`
 - `boot watch-test`
+- `boot fmt`
+- `boot release`
 
 ## License
 
-Copyright (c) 2017 Adam Renklint
+Copyright (c) 2017 [Adam Renklint](http://adamrenklint.com)
 
-Distributed under the MIT license
+Distributed under the [MIT license](https://github.com/adamrenklint/prost/blob/master/LICENSE)
