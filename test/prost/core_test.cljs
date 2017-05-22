@@ -1,7 +1,7 @@
 (ns prost.core-test
   (:require [cljs.test :refer-macros [is are testing deftest]]
             [prost.core :refer-macros [arg! ret! shape!]]
-            [cljs.spec :as s]))
+            [cljs.spec.alpha :as s]))
 
 (s/def ::pos-int (s/and integer? pos?))
 (s/def ::fooish (s/keys :req-un [::pos-int]))

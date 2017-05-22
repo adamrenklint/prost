@@ -2,13 +2,13 @@
   (:require [goog.string :as gs]
             [goog.string.format]
             [clojure.string :as str]
-            [cljs.spec :as s]))
+            [cljs.spec.alpha :as s]))
 
 (def valid? s/valid?)
 
 (defn- explain-spec
   [spec v]
-  (first (:cljs.spec/problems (s/explain-data spec v))))
+  (first (:cljs.spec.alpha/problems (s/explain-data spec v))))
 
 (defn- value->str
   [v]

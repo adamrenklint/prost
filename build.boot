@@ -1,9 +1,9 @@
 (def project 'adamrenklint/prost)
-(def version "1.0.0")
+(def version "1.1.0")
 
 (set-env!
  :source-paths #{"src"}
- :dependencies '[[org.clojure/clojurescript   "1.9.494"]
+ :dependencies '[[org.clojure/clojurescript   "1.9.542"]
                  [adzerk/bootlaces            "0.1.13" :scope "test"]
                  [crisptrutski/boot-cljs-test "0.3.0"  :scope "test"]
                  [adamrenklint/boot-fmt       "1.1.0"  :scope "test"]])
@@ -18,7 +18,7 @@
 (ns-unmap 'boot.user 'test)
 
 (deftask test
-  [e exit?     bool  "Exit after running"]
+  [e exit? bool "Exit after running"]
   (merge-env! :source-paths #{"test"})
   (test-cljs :exit? exit?))
 
