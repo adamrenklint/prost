@@ -12,7 +12,8 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 
 ```clojure
 (ns prost.demo
-  (:require [prost.core :refer-macros [arg! ret! shape!]]))
+  (:require [cljs.spec.alpha :as s]
+            [prost.core :refer-macros [arg! ret! shape!]]))
 
 ; Use any predicate function
 (defn expect-string
