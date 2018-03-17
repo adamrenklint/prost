@@ -2,12 +2,16 @@
 
 (defmacro arg!
   [f v]
-  `(prost.core/arg* ~(str f) ~f ~(str v) ~v))
+  `(or (cljs.spec.alpha/valid? ~f ~v)
+       (throw (js/TypeError (arg-err-str ~(str f) ~f ~(str v) ~v)))))
 
 (defmacro ret!
   [f v]
-  `(prost.core/ret* ~(str f) ~f ~v))
+  `(or (cljs.spec.alpha/valid? ~f ~v)
+       (throw (js/TypeError (ret-err-str ~(str f) ~f ~v)))))
 
 (defmacro shape!
   [name f v]
-  `(prost.core/shape* ~name ~(str f) ~f ~v))
+  `(if (cljs.spec.alpha/valid? ~f ~v)
+     ~v
+     (throw (js/TypeError (shape-err-str ~name ~(str f) ~f ~v)))))

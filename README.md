@@ -5,7 +5,7 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 [![CircleCI](https://circleci.com/gh/adamrenklint/prost.svg?style=svg)](https://circleci.com/gh/adamrenklint/prost)
 
 ```clojure
-[adamrenklint/prost "1.1.0"] ;; latest release
+[adamrenklint/prost "1.2.0"] ;; latest release
 ```
 
 ## Usage
@@ -22,6 +22,7 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
   v)
 
 ; Or use any spec from the global registry
+(s/def ::pos-int pos-int?)
 (defn expect-pos-int
   [v]
   {:pre [(arg! ::pos-int v)]}
@@ -46,6 +47,13 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 ; => nil
 (shape! "foo" ::fooish {:pos-int "asdf"})
 ; => invalid shape 'foo :pos-int', expected "asdf" to be pos? via :prost.demo/fooish > :prost.demo/pos-int
+
+; Get helpful error message for missing key
+(defn expect-fooish
+  [m]
+  {:pre [(arg! ::fooish {:foo :bar})]}
+  m)
+; => invalid argument 'm', expected \{:foo :bar} to contain the key :pos-int via \:prost\.demo\-test/fooish
 ```
 
 ## Develop
@@ -57,6 +65,6 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 
 ## License
 
-Copyright (c) 2017 [Adam Renklint](http://adamrenklint.com)
+Copyright (c) 2017-2018 [Adam Renklint](http://adamrenklint.com)
 
 Distributed under the [MIT license](https://github.com/adamrenklint/prost/blob/master/LICENSE)

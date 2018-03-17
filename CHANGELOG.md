@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.2.0 - 2018-03-17
+
+- Improve error string for map missing a required key
+- Move `throw` into `arg!`/`ret!`/`shape!` macros for cleaner stacktrace
+
 ## v1.1.0 - 2017-05-22
 
 - Update to ClojureScript v1.9.542 (cljs.spec -> cljs.spec.alpha)

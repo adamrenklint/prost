@@ -4,8 +4,6 @@
             [clojure.string :as str]
             [cljs.spec.alpha :as s]))
 
-(def valid? s/valid?)
-
 (defn- explain-spec
   [spec v]
   (first (:cljs.spec.alpha/problems (s/explain-data spec v))))
@@ -31,8 +29,15 @@
 
 (defn- spec->err-str
   [head val pred via]
-  (gs/format "%s, expected %s to be %s via %s"
-             head (value->str val) pred (str/join " > " via)))
+  (let [pred-s (str "be " pred)
+        pred-s (if (re-find #"#\{(\:\w+\s*)*\}" (str pred))
+                 (str "be one of the allowed values " pred)
+                 pred-s)
+        pred-s (if-let [match (re-find #"\(contains\? \% (\:[\w\-]+)\)" (str pred))]
+                 (str "contain the key " (second match))
+                 pred-s)]
+    (gs/format "%s, expected %s to %s via %s"
+               head (value->str val) pred-s (str/join " > " via))))
 
 (defn- spec->arg-err-str
   [cond-str spec k v]
@@ -55,8 +60,9 @@
 (defn shape-err-str
   [name cond-str cond-f v]
   (let [{:keys [pred val via in]} (explain-spec cond-f v)
-        path (str/join " " in)]
-    (spec->err-str (gs/format "invalid shape '%s %s'" name path) val pred via)))
+        path (if (seq in) (str/join " " in) nil)
+        name (str/join " " (remove nil? [name path]))]
+    (spec->err-str (gs/format "invalid shape '%s'" name) val pred via)))
 
 (defn ret-err-str
   [cond-str cond-f v]
@@ -67,17 +73,3 @@
 (defn validate-return
   [pred v]
   (when (pred v) v))
-
-(defn arg*
-  [fs f vs v]
-  (or (valid? f v)
-      (throw (js/TypeError (arg-err-str fs f vs v)))))
-
-(defn ret*
-  [fs f v]
-  (or (valid? f v)
-      (throw (js/TypeError (ret-err-str fs f v)))))
-
-(defn shape*
-  [name fs f v]
-  (if (valid? f v) v (throw (js/TypeError (shape-err-str name fs f v)))))
