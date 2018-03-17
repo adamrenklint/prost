@@ -56,6 +56,8 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 ; => invalid argument 'm', expected \{:foo :bar} to contain the key :pos-int via \:prost\.demo\-test/fooish
 ```
 
+To disable the `:pre` and `:post` checks, simply pass the [`:elide-asserts`](https://cljs.github.io/api/compiler-options/elide-asserts) option to the ClojureScript compiler.
+
 ## Develop
 
 - `boot test`
