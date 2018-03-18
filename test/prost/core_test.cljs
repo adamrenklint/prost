@@ -15,7 +15,7 @@
         expect-integer (fn [v] {:pre [(arg! integer? v)]} [:ret v])
         expect-pos-int (fn [v] {:pre [(arg! ::pos-int v)]} [:ret v])
         expect-fooish (fn [v] {:pre [(arg! ::fooish v)]} [:ret v])
-        ; expect-contains (fn [v] {:pre [(arg! ::contains v)]} [:ret v])
+        expect-contains (fn [v] {:pre [(arg! ::contains v)]} [:ret v])
         expect-contains-key (fn [v] {:pre [(arg! ::contains-key v)]} [:ret v])]
 
     (testing "with valid predicate fn"
@@ -41,9 +41,9 @@
       (is (thrown-with-msg? js/TypeError
                             #"invalid argument \'v \:pos\-int\', expected \-12 to be pos\? via \:prost\.core\-test/fooish > \:prost\.core\-test/pos\-in"
                             (expect-fooish {:pos-int -12})))
-      ; (is (thrown-with-msg? js/TypeError
-      ;                       #"invalid argument \'v\', expected :baz to be one of the allowed values #\{:bar :foo} via \:prost\.core\-test/contains"
-      ;                       (expect-contains :baz)))
+      (is (thrown-with-msg? js/TypeError
+                            #"invalid argument \'v\', expected :baz to be one of the allowed values #\{:bar :foo} via \:prost\.core\-test/contains"
+                            (expect-contains :baz)))
       (is (thrown-with-msg? js/TypeError
                             #"invalid argument \'v\', expected \{:foo :bar} to contain the key :contains via \:prost\.core\-test/contains-key"
                             (expect-contains-key {:foo :bar}))))))
@@ -53,6 +53,7 @@
         expect-integer (fn [v] {:post [(ret! integer? %)]} v)
         expect-pos-int (fn [v] {:post [(ret! ::pos-int %)]} v)
         expect-fooish (fn [v] {:post [(ret! ::fooish %)]} v)
+        expect-contains (fn [v] {:post [(ret! ::contains v)]} v)
         expect-contains-key (fn [v] {:pre [(ret! ::contains-key v)]} v)]
     (testing "with valid predicate fn"
       (is (expect-string "asdf"))
@@ -77,6 +78,9 @@
       (is (thrown-with-msg? js/TypeError
                             #"invalid return value \':pos-int\', expected \-12 to be pos\? via \:prost\.core\-test/fooish > \:prost\.core\-test/pos\-in"
                             (expect-fooish {:pos-int -12})))
+      (is (thrown-with-msg? js/TypeError
+                            #"invalid return value, expected :baz to be one of the allowed values #\{:bar :foo} via \:prost\.core\-test/contains"
+                            (expect-contains :baz)))
       (is (thrown-with-msg? js/TypeError
                             #"invalid return value, expected \{:foo :bar} to contain the key :contains via \:prost\.core\-test/contains-key"
                             (expect-contains-key {:foo :bar}))))))

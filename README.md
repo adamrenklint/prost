@@ -1,6 +1,6 @@
 # prost
 
-Pre and post condition assertion helpers for ClojureScript with useful errors
+ClojureScript spec assertion helpers with useful errors, for pre/post conditions and map shape validation
 
 [![CircleCI](https://circleci.com/gh/adamrenklint/prost.svg?style=svg)](https://circleci.com/gh/adamrenklint/prost)
 
@@ -17,22 +17,22 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 
 ; Use any predicate function
 (defn expect-string
-  [v]
-  {:pre [(arg! string? v)]}
-  v)
+  [s]
+  {:pre [(arg! string? s)]}
+  s)
 
 ; Or use any spec from the global registry
 (s/def ::pos-int pos-int?)
 (defn expect-pos-int
-  [v]
-  {:pre [(arg! ::pos-int v)]}
-  v)
+  [n]
+  {:pre [(arg! ::pos-int n)]}
+  n)
 
 ; When the argument assertion fails, you get a helpful error message:
 (expect-string 123)
-; => invalid argument 'v', expected 12 to be string?
+; => TypeError: invalid argument 's', expected 12 to be string?
 (expect-pos-int "asdf")
-; => invalid argument 'v', expected "asdf" to be pos? via :prost.demo/pos-int
+; => TypeError: invalid argument 'n', expected "asdf" to be pos? via :prost.demo/pos-int
 
 ; Assert constraints between input and output
 (defn double
@@ -44,17 +44,29 @@ Pre and post condition assertion helpers for ClojureScript with useful errors
 ; Assert the shape of a map
 (s/def ::fooish (s/keys :req-un [::pos-int]))
 (shape! "foo" ::fooish {:pos-int 12})
-; => nil
+; => {:pos-int 12}
 (shape! "foo" ::fooish {:pos-int "asdf"})
-; => invalid shape 'foo :pos-int', expected "asdf" to be pos? via :prost.demo/fooish > :prost.demo/pos-int
+; => TypeError: invalid shape 'foo :pos-int', expected "asdf" to be pos? via :prost.demo/fooish > :prost.demo/pos-int
 
 ; Get helpful error message for missing key
 (defn expect-fooish
   [m]
-  {:pre [(arg! ::fooish {:foo :bar})]}
+  {:pre [(arg! ::fooish m)]}
   m)
-; => invalid argument 'm', expected \{:foo :bar} to contain the key :pos-int via \:prost\.demo\-test/fooish
+(expect-fooish {:foo :bar})
+; => TypeError: invalid argument 'm', expected {:foo :bar} to contain the key :pos-int via :prost.demo-test/fooish
+
+; Get precise error message when using set as predicate
+(s/def ::color #{:red :green :blue})
+(defn expect-color
+  [color]
+  {:pre [(arg! ::color color)]}
+  color)
+(expect-color :foo)
+; => TypeError: invalid argument 'color', expected :foo to be one of the allowed values #{:red :green :blue} via :prost.demo-test/color
 ```
+
+### Disable in production
 
 To disable the `:pre` and `:post` checks, simply pass the [`:elide-asserts`](https://cljs.github.io/api/compiler-options/elide-asserts) option to the ClojureScript compiler.
 
